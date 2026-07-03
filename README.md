@@ -1,0 +1,119 @@
+# Booster_T1
+
+[![IsaacSim](https://img.shields.io/badge/IsaacSim-5.1.0-silver.svg)](https://docs.omniverse.nvidia.com/isaacsim/latest/overview.html)
+[![Isaac Lab](https://img.shields.io/badge/IsaacLab-2.3.2-silver)](https://isaac-sim.github.io/IsaacLab)
+[![Python](https://img.shields.io/badge/python-3.11-blue.svg)](https://docs.python.org/3/whatsnew/3.11.html)
+[![License](https://img.shields.io/badge/license-Apache2.0-yellow.svg)](https://opensource.org/license/apache-2-0)
+
+## Overview
+
+**Booster_T1** is a trimmed Isaac Lab extension for Booster T1 humanoid locomotion experiments. The project keeps the original Booster T1 velocity tasks from the original Isaac Lab extension and removes the unrelated robot/task registrations.
+
+The Python module, installable distribution, and extension display name are all `Booster_T1`.
+
+## Available Tasks
+
+| Robot | Terrain | Task name |
+|-------|---------|-----------|
+| Booster T1 | Flat | `RobotLab-Isaac-Velocity-Flat-Booster-T1-v0` |
+| Booster T1 | Rough | `RobotLab-Isaac-Velocity-Rough-Booster-T1-v0` |
+
+You can confirm the registered tasks with:
+
+```bash
+python scripts/tools/list_envs.py
+```
+
+## Requirements
+
+- Python 3.11
+- Isaac Sim 5.1.0
+- Isaac Lab 2.3.2
+- A Python environment where Isaac Lab and Isaac Sim can be imported
+
+Use the conda environment where Isaac Lab and Isaac Sim are installed.
+
+## Installation
+
+Install Isaac Lab first, then install this project in editable mode from the repository root:
+
+```bash
+python -m pip install -e source/Booster_T1
+```
+
+If an older editable install is still present, reinstall cleanly:
+
+```bash
+python -m pip uninstall -y Booster_T1
+python -m pip install -e source/Booster_T1
+```
+
+## RSL-RL Usage
+
+Train the flat task:
+
+```bash
+python scripts/reinforcement_learning/rsl_rl/train.py --task=RobotLab-Isaac-Velocity-Flat-Booster-T1-v0 --headless
+```
+
+Train the rough task:
+
+```bash
+python scripts/reinforcement_learning/rsl_rl/train.py --task=RobotLab-Isaac-Velocity-Rough-Booster-T1-v0 --headless
+```
+
+Play a trained flat checkpoint:
+
+```bash
+python scripts/reinforcement_learning/rsl_rl/play.py --task=RobotLab-Isaac-Velocity-Flat-Booster-T1-v0 --checkpoint=logs/rsl_rl/booster_t1_flat/<run>/model_<iter>.pt --num_envs=1
+```
+
+Play a trained rough checkpoint:
+
+```bash
+python scripts/reinforcement_learning/rsl_rl/play.py --task=RobotLab-Isaac-Velocity-Rough-Booster-T1-v0 --checkpoint=logs/rsl_rl/booster_t1_rough/<run>/model_<iter>.pt --num_envs=1
+```
+
+Logs are written under:
+
+```text
+logs/rsl_rl/booster_t1_flat
+logs/rsl_rl/booster_t1_rough
+```
+
+## Quick Environment Checks
+
+Run a zero-action agent:
+
+```bash
+python scripts/tools/zero_agent.py --task=RobotLab-Isaac-Velocity-Flat-Booster-T1-v0 --headless
+```
+
+Run a random-action agent:
+
+```bash
+python scripts/tools/random_agent.py --task=RobotLab-Isaac-Velocity-Rough-Booster-T1-v0 --headless
+```
+
+## Project Layout
+
+```text
+source/Booster_T1/Booster_T1/assets/booster.py
+source/Booster_T1/Booster_T1/tasks/manager_based/locomotion/velocity/config/humanoid/booster_t1/
+  __init__.py
+  flat_env_cfg.py
+  rough_env_cfg.py
+  agents/
+    rsl_rl_ppo_cfg.py
+    cusrl_ppo_cfg.py
+```
+
+## Notes
+
+- Keep using `import Booster_T1.tasks` in scripts; this is the Python module name.
+- Use `Booster_T1` as the project/distribution name.
+- Only the Booster T1 flat and rough velocity tasks should appear in the RobotLab task registry.
+
+## Acknowledgements
+
+This project is based on the original Isaac Lab extension by Ziqi Fan and the Isaac Lab project.
