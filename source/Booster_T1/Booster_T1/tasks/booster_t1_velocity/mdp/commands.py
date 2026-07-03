@@ -11,7 +11,7 @@ import torch
 from isaaclab.managers import CommandTerm, CommandTermCfg
 from isaaclab.utils import configclass
 
-import Booster_T1.tasks.manager_based.locomotion.velocity.mdp as mdp
+from Booster_T1.tasks.booster_t1_velocity import mdp
 
 from .utils import is_robot_on_terrain
 

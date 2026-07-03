@@ -15,8 +15,8 @@ The Python module, installable distribution, and extension display name are all 
 
 | Robot | Terrain | Task name |
 |-------|---------|-----------|
-| Booster T1 | Flat | `RobotLab-Isaac-Velocity-Flat-Booster-T1-v0` |
-| Booster T1 | Rough | `RobotLab-Isaac-Velocity-Rough-Booster-T1-v0` |
+| Booster T1 | Flat | `Isaac-Velocity-Flat-Booster-T1-v0` |
+| Booster T1 | Rough | `Isaac-Velocity-Rough-Booster-T1-v0` |
 
 You can confirm the registered tasks with:
 
@@ -35,43 +35,47 @@ Use the conda environment where Isaac Lab and Isaac Sim are installed.
 
 ## Installation
 
-Install Isaac Lab first, then install this project in editable mode from the repository root:
+Install Isaac Lab first, then install this project in editable mode from the repository root without resolving extra dependencies:
 
 ```bash
-python -m pip install -e source/Booster_T1
+python -m pip install --no-deps -e source/Booster_T1
 ```
 
 If an older editable install is still present, reinstall cleanly:
 
 ```bash
 python -m pip uninstall -y Booster_T1
-python -m pip install -e source/Booster_T1
+python -m pip install --no-deps -e source/Booster_T1
 ```
+
+The default package intentionally avoids installing transitive dependencies because Isaac Sim and Isaac Lab pin shared packages such as `click`, `typing_extensions`, `wrapt`, and `protobuf`. Install optional training stacks only when needed and verify they do not disturb the Isaac environment.
+
+For cuSRL experiments, install `cusrl` separately in a compatible environment before running scripts under `scripts/reinforcement_learning/cusrl/`.
 
 ## RSL-RL Usage
 
 Train the flat task:
 
 ```bash
-python scripts/reinforcement_learning/rsl_rl/train.py --task=RobotLab-Isaac-Velocity-Flat-Booster-T1-v0 --headless
+python scripts/reinforcement_learning/rsl_rl/train.py --task=Isaac-Velocity-Flat-Booster-T1-v0 --headless
 ```
 
 Train the rough task:
 
 ```bash
-python scripts/reinforcement_learning/rsl_rl/train.py --task=RobotLab-Isaac-Velocity-Rough-Booster-T1-v0 --headless
+python scripts/reinforcement_learning/rsl_rl/train.py --task=Isaac-Velocity-Rough-Booster-T1-v0 --headless
 ```
 
 Play a trained flat checkpoint:
 
 ```bash
-python scripts/reinforcement_learning/rsl_rl/play.py --task=RobotLab-Isaac-Velocity-Flat-Booster-T1-v0 --checkpoint=logs/rsl_rl/booster_t1_flat/<run>/model_<iter>.pt --num_envs=1
+python scripts/reinforcement_learning/rsl_rl/play.py --task=Isaac-Velocity-Flat-Booster-T1-v0 --checkpoint=logs/rsl_rl/booster_t1_flat/<run>/model_<iter>.pt --num_envs=1
 ```
 
 Play a trained rough checkpoint:
 
 ```bash
-python scripts/reinforcement_learning/rsl_rl/play.py --task=RobotLab-Isaac-Velocity-Rough-Booster-T1-v0 --checkpoint=logs/rsl_rl/booster_t1_rough/<run>/model_<iter>.pt --num_envs=1
+python scripts/reinforcement_learning/rsl_rl/play.py --task=Isaac-Velocity-Rough-Booster-T1-v0 --checkpoint=logs/rsl_rl/booster_t1_rough/<run>/model_<iter>.pt --num_envs=1
 ```
 
 Logs are written under:
@@ -86,33 +90,34 @@ logs/rsl_rl/booster_t1_rough
 Run a zero-action agent:
 
 ```bash
-python scripts/tools/zero_agent.py --task=RobotLab-Isaac-Velocity-Flat-Booster-T1-v0 --headless
+python scripts/tools/zero_agent.py --task=Isaac-Velocity-Flat-Booster-T1-v0 --headless
 ```
 
 Run a random-action agent:
 
 ```bash
-python scripts/tools/random_agent.py --task=RobotLab-Isaac-Velocity-Rough-Booster-T1-v0 --headless
+python scripts/tools/random_agent.py --task=Isaac-Velocity-Rough-Booster-T1-v0 --headless
 ```
 
 ## Project Layout
 
 ```text
 source/Booster_T1/Booster_T1/assets/booster.py
-source/Booster_T1/Booster_T1/tasks/manager_based/locomotion/velocity/config/humanoid/booster_t1/
+source/Booster_T1/Booster_T1/tasks/booster_t1_velocity/
   __init__.py
+  base_env_cfg.py
   flat_env_cfg.py
   rough_env_cfg.py
-  agents/
-    rsl_rl_ppo_cfg.py
-    cusrl_ppo_cfg.py
+  rsl_rl_ppo_cfg.py
+  cusrl_ppo_cfg.py
+  mdp/
 ```
 
 ## Notes
 
 - Keep using `import Booster_T1.tasks` in scripts; this is the Python module name.
 - Use `Booster_T1` as the project/distribution name.
-- Only the Booster T1 flat and rough velocity tasks should appear in the RobotLab task registry.
+- Only the Booster T1 flat and rough velocity tasks should appear in the Isaac Lab task registry.
 
 ## Acknowledgements
 

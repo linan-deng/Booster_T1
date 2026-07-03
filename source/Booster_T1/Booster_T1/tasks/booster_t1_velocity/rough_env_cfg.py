@@ -5,7 +5,7 @@ from isaaclab.utils import configclass
 
 import isaaclab_tasks.manager_based.locomotion.velocity.mdp as mdp
 
-from Booster_T1.tasks.manager_based.locomotion.velocity.velocity_env_cfg import LocomotionVelocityRoughEnvCfg
+from .base_env_cfg import LocomotionVelocityRoughEnvCfg
 
 ##
 # Pre-defined configs

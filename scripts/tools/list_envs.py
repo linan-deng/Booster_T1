@@ -12,8 +12,7 @@ Script to print all the available environments in Isaac Lab.
 The script iterates over all registered environments and stores the details in a table.
 It prints the name of the environment, the entry point and the config file.
 
-All the environments are registered in the `isaaclab_tasks` extension. They start
-with `Isaac` in their name.
+The Booster_T1 environments are registered by importing `Booster_T1.tasks`.
 """
 
 """Launch Isaac Sim Simulator first."""
@@ -24,7 +23,7 @@ from isaaclab.app import AppLauncher
 
 # add argparse arguments
 parser = argparse.ArgumentParser(description="List Isaac Lab environments.")
-parser.add_argument("--keyword", type=str, default=None, help="Keyword to filter environments.")
+parser.add_argument("--keyword", type=str, default="Booster-T1", help="Keyword to filter environments.")
 # parse the arguments
 args_cli = parser.parse_args()
 
@@ -43,10 +42,10 @@ from prettytable import PrettyTable
 
 
 def main():
-    """Print all environments registered in `isaaclab_tasks` extension."""
+    """Print environments registered by this extension."""
     # print all the available environments
     table = PrettyTable(["S. No.", "Task Name", "Entry Point", "Config"])
-    table.title = "Available Environments in Isaac Lab"
+    table.title = "Available Booster_T1 Environments"
     # set alignment of table columns
     table.align["Task Name"] = "l"
     table.align["Entry Point"] = "l"
@@ -58,9 +57,9 @@ def main():
 
     # count of environments
     index = 0
-    # acquire all Isaac environments names
+    # acquire matching Booster_T1 environment names
     for task_spec in gym.registry.values():
-        if "RobotLab" in task_spec.id and (args_cli.keyword is None or args_cli.keyword in task_spec.id):
+        if args_cli.keyword is None or args_cli.keyword in task_spec.id:
             # wrap long text in each column before adding it to the table
             task_name = textwrap.fill(task_spec.id, max_width)
             entry_point = textwrap.fill(task_spec.entry_point, max_width)
