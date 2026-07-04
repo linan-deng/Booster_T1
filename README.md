@@ -72,11 +72,21 @@ Play a trained flat checkpoint:
 python scripts/reinforcement_learning/rsl_rl/play.py --task=Isaac-Velocity-Flat-Booster-T1-v0 --checkpoint=logs/rsl_rl/booster_t1_flat/2026-07-04_00-26-31/model_1499.pt --num_envs=256
 ```
 
+<video width="600" controls>
+  <source src="logs/rsl_rl/booster_t1_flat/2026-07-04_00-26-31/model_1499.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
 Play a trained rough checkpoint:
 
 ```bash
 python scripts/reinforcement_learning/rsl_rl/play.py --task=Isaac-Velocity-Rough-Booster-T1-v0 --checkpoint=logs/rsl_rl/booster_t1_rough/2026-07-04_02-21-39/model_2999.pt --num_envs=256
 ```
+
+<video width="600" controls>
+  <source src="logs/rsl_rl/booster_t1_rough/2026-07-04_02-21-39/model_2999.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
 
 Logs are written under:
 
