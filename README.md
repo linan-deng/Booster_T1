@@ -145,4 +145,4 @@ source/Booster_T1/Booster_T1/tasks/booster_t1_velocity/
 
 ## Acknowledgements
 
-This project is based on the original Isaac Lab extension by Ziqi Fan and the Isaac Lab project.
+This project is based on the original Isaac Lab extension by [fan-ziqi/robot_lab](https://github.com/fan-ziqi/robot_lab) and the Isaac Lab project.
