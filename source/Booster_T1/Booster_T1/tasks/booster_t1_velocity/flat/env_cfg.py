@@ -3,7 +3,7 @@
 
 from isaaclab.utils import configclass
 
-from .rough_env_cfg import BoosterT1RoughEnvCfg
+from ..rough.env_cfg import BoosterT1RoughEnvCfg
 
 
 @configclass

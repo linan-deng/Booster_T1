@@ -128,14 +128,17 @@ source/Booster_T1/Booster_T1/assets/booster.py
 source/Booster_T1/Booster_T1/tasks/booster_t1_velocity/
   __init__.py
   base_env_cfg.py
-  flat_env_cfg.py
-  rough_env_cfg.py
-  rsl_rl_ppo_cfg.py
-  cusrl_ppo_cfg.py
+  flat/
+    env_cfg.py
+  rough/
+    env_cfg.py
+  agents/
+    rsl_rl_ppo_cfg.py
+    cusrl_ppo_cfg.py
   mdp/
 ```
 
-`base_env_cfg.py` contains the shared velocity-tracking environment configuration. `rough_env_cfg.py` configures the Booster T1 rough-terrain task, and `flat_env_cfg.py` derives the flat-terrain variant by disabling terrain generation, height scanning, and terrain curriculum.
+`base_env_cfg.py` contains the shared velocity-tracking environment configuration. `rough/env_cfg.py` configures the Booster T1 rough-terrain task, and `flat/env_cfg.py` derives the flat-terrain variant by disabling terrain generation, height scanning, and terrain curriculum. The `agents/` package contains shared RSL-RL and cuSRL PPO configs for both task variants.
 
 ## Notes
 
