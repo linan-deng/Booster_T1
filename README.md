@@ -102,6 +102,8 @@ python scripts/reinforcement_learning/rsl_rl/play.py --task=Isaac-Velocity-Flat-
   Your browser does not support the video tag.
 </video>
 
+[Watch demo video](./logs/rsl_rl/booster_t1_flat/2026-07-04_00-26-31/model_1499.mp4)
+
 Rough terrain example:
 
 ```bash
