@@ -69,13 +69,13 @@ python scripts/reinforcement_learning/rsl_rl/train.py --task=Isaac-Velocity-Roug
 Play a trained flat checkpoint:
 
 ```bash
-python scripts/reinforcement_learning/rsl_rl/play.py --task=Isaac-Velocity-Flat-Booster-T1-v0 --checkpoint=logs/rsl_rl/booster_t1_flat/<run>/model_<iter>.pt --num_envs=1
+python scripts/reinforcement_learning/rsl_rl/play.py --task=Isaac-Velocity-Flat-Booster-T1-v0 --checkpoint=logs/rsl_rl/booster_t1_flat/2026-07-04_00-26-31/model_1499.pt --num_envs=256
 ```
 
 Play a trained rough checkpoint:
 
 ```bash
-python scripts/reinforcement_learning/rsl_rl/play.py --task=Isaac-Velocity-Rough-Booster-T1-v0 --checkpoint=logs/rsl_rl/booster_t1_rough/<run>/model_<iter>.pt --num_envs=1
+python scripts/reinforcement_learning/rsl_rl/play.py --task=Isaac-Velocity-Rough-Booster-T1-v0 --checkpoint=logs/rsl_rl/booster_t1_rough/2026-07-04_02-21-39/model_2999.pt --num_envs=256
 ```
 
 Logs are written under:
