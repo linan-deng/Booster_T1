@@ -7,7 +7,7 @@
 
 ## Overview
 
-**Booster_T1** is a trimmed Isaac Lab extension for Booster T1 humanoid locomotion experiments. The project keeps the original Booster T1 velocity tasks from the original Isaac Lab extension and removes the unrelated robot/task registrations.
+**Booster_T1** is a focused Isaac Lab extension for Booster T1 humanoid velocity-tracking locomotion experiments. It keeps the Booster T1 flat and rough terrain tasks, the Booster T1 robot asset configuration, and the reinforcement learning scripts needed to train and replay policies.
 
 The Python module, installable distribution, and extension display name are all `Booster_T1`.
 
@@ -18,7 +18,7 @@ The Python module, installable distribution, and extension display name are all 
 | Booster T1 | Flat | `Isaac-Velocity-Flat-Booster-T1-v0` |
 | Booster T1 | Rough | `Isaac-Velocity-Rough-Booster-T1-v0` |
 
-You can confirm the registered tasks with:
+List registered Booster T1 tasks with:
 
 ```bash
 python scripts/tools/list_envs.py
@@ -48,11 +48,11 @@ python -m pip uninstall -y Booster_T1
 python -m pip install --no-deps -e source/Booster_T1
 ```
 
-The default package intentionally avoids installing transitive dependencies because Isaac Sim and Isaac Lab pin shared packages such as `click`, `typing_extensions`, `wrapt`, and `protobuf`. Install optional training stacks only when needed and verify they do not disturb the Isaac environment.
+The package intentionally avoids default transitive dependencies because Isaac Sim and Isaac Lab pin shared packages such as `click`, `typing_extensions`, `wrapt`, and `protobuf`. Install optional training stacks only when needed and verify they do not disturb the Isaac environment.
 
 For cuSRL experiments, install `cusrl` separately in a compatible environment before running scripts under `scripts/reinforcement_learning/cusrl/`.
 
-## RSL-RL Usage
+## RSL-RL Training
 
 Train the flat task:
 
@@ -66,7 +66,32 @@ Train the rough task:
 python scripts/reinforcement_learning/rsl_rl/train.py --task=Isaac-Velocity-Rough-Booster-T1-v0 --headless
 ```
 
+Logs are written under:
+
+```text
+logs/rsl_rl/booster_t1_flat
+logs/rsl_rl/booster_t1_rough
+```
+
+## RSL-RL Replay
+
 Play a trained flat checkpoint:
+
+```bash
+python scripts/reinforcement_learning/rsl_rl/play.py --task=Isaac-Velocity-Flat-Booster-T1-v0 --checkpoint=logs/rsl_rl/booster_t1_flat/<run>/model_<iter>.pt --num_envs=1
+```
+
+Play a trained rough checkpoint:
+
+```bash
+python scripts/reinforcement_learning/rsl_rl/play.py --task=Isaac-Velocity-Rough-Booster-T1-v0 --checkpoint=logs/rsl_rl/booster_t1_rough/<run>/model_<iter>.pt --num_envs=1
+```
+
+The replay script exports policies next to the checkpoint under an `exported/` directory.
+
+## Example Results
+
+Flat terrain example:
 
 ```bash
 python scripts/reinforcement_learning/rsl_rl/play.py --task=Isaac-Velocity-Flat-Booster-T1-v0 --checkpoint=logs/rsl_rl/booster_t1_flat/2026-07-04_00-26-31/model_1499.pt --num_envs=256
@@ -77,7 +102,7 @@ python scripts/reinforcement_learning/rsl_rl/play.py --task=Isaac-Velocity-Flat-
   Your browser does not support the video tag.
 </video>
 
-Play a trained rough checkpoint:
+Rough terrain example:
 
 ```bash
 python scripts/reinforcement_learning/rsl_rl/play.py --task=Isaac-Velocity-Rough-Booster-T1-v0 --checkpoint=logs/rsl_rl/booster_t1_rough/2026-07-04_02-21-39/model_2999.pt --num_envs=256
@@ -87,13 +112,6 @@ python scripts/reinforcement_learning/rsl_rl/play.py --task=Isaac-Velocity-Rough
   <source src="logs/rsl_rl/booster_t1_rough/2026-07-04_02-21-39/model_2999.mp4" type="video/mp4">
   Your browser does not support the video tag.
 </video>
-
-Logs are written under:
-
-```text
-logs/rsl_rl/booster_t1_flat
-logs/rsl_rl/booster_t1_rough
-```
 
 ## Quick Environment Checks
 
@@ -123,11 +141,13 @@ source/Booster_T1/Booster_T1/tasks/booster_t1_velocity/
   mdp/
 ```
 
+`base_env_cfg.py` contains the shared velocity-tracking environment configuration. `rough_env_cfg.py` configures the Booster T1 rough-terrain task, and `flat_env_cfg.py` derives the flat-terrain variant by disabling terrain generation, height scanning, and terrain curriculum.
+
 ## Notes
 
-- Keep using `import Booster_T1.tasks` in scripts; this is the Python module name.
+- Keep using `import Booster_T1.tasks` in scripts; this registers the Gym environments.
 - Use `Booster_T1` as the project/distribution name.
-- Only the Booster T1 flat and rough velocity tasks should appear in the Isaac Lab task registry.
+- Only the Booster T1 flat and rough velocity tasks should appear in this extension's task registry.
 
 ## Acknowledgements
 
