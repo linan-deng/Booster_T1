@@ -98,7 +98,7 @@ python scripts/reinforcement_learning/rsl_rl/play.py --task=Isaac-Velocity-Flat-
 ```
 
 <video width="600" controls>
-  <source src="logs/rsl_rl/booster_t1_flat/2026-07-04_00-26-31/model_1499.mp4" type="video/mp4">
+  <source src="./logs/rsl_rl/booster_t1_flat/2026-07-04_00-26-31/model_1499.mp4" type="video/mp4">
   Your browser does not support the video tag.
 </video>
 
@@ -109,7 +109,7 @@ python scripts/reinforcement_learning/rsl_rl/play.py --task=Isaac-Velocity-Rough
 ```
 
 <video width="600" controls>
-  <source src="logs/rsl_rl/booster_t1_rough/2026-07-04_02-21-39/model_2999.mp4" type="video/mp4">
+  <source src="./logs/rsl_rl/booster_t1_rough/2026-07-04_02-21-39/model_2999.mp4" type="video/mp4">
   Your browser does not support the video tag.
 </video>
 
